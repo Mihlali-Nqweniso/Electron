@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electron</title>
+    <style>
+        :root {
+          --bg: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35));
+          /* --- MODIFIED VALUES FOR CONTRAST --- */
+          --glass: rgba(255,255,255,0.65);        /* Was 0.45 */
+          --glass-strong: rgba(255,255,255,0.75); /* Was 0.55 */
+          --border: rgba(0,0,0,0.1);              /* Was light, now subtle dark */
+          /* ------------------------------------ */
+          --outline: rgba(0,0,0,0.08);
+          --text:#0b0b0f;
+          --muted:#5a5a66;
+          --accent:#007aff;
+        }
+        body {
+          font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          width:340px; margin:0; padding:16px; color:var(--text);
+          background: transparent;
+        }
+        .card {
+          position:relative;
+          background: var(--glass);
+          border: 1px solid var(--border);
+          border-radius:18px; padding:14px;
+          box-shadow: 0 8px 26px rgba(0,0,0,0.08), inset 0 1px 0 var(--outline);
+          backdrop-filter: blur(14px) saturate(140%);
+          -webkit-backdrop-filter: blur(14px) saturate(140%);
+          overflow:hidden;
+        }
+        /* --- REMOVED .card::before glare effect for contrast --- */
+        
+        .header { display:flex; align-items:center; justify-content:center; gap:8px; margin:0 0 8px; }
+        .logo { width:18px; height:18px; border-radius:6px; overflow:hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        h1 { font-size:16px; font-weight:800; letter-spacing:-0.01em; margin:0; text-align:center; }
+        label { display:block; font-size:12px; color:var(--muted); margin:8px 0 6px; }
+        textarea {
+          width:100%; box-sizing:border-box; padding:12px 14px; border-radius:14px; min-height:92px; font-size:14px; resize:vertical;
+          border:1px solid var(--border);
+          background: var(--glass-strong);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          box-shadow: inset 0 1px 0 var(--outline);
+          color:var(--text);
+        }
+        .row { display:flex; gap:10px; margin-top:8px; }
+        button {
+          appearance:none; border:0; border-radius:14px; padding:10px 14px; font-weight:700; font-size:14px; cursor:pointer;
+          transition: transform .06s ease, box-shadow .2s ease;
+        }
+        button:active { transform: translateY(1px); }
+        .primary {
+          background: rgba(255,255,255,0.92); color:#0b0b0f; flex:1;
+          border:1px solid rgba(255,255,255,0.6);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.7);
+          backdrop-filter: blur(10px) saturate(140%);
+          -webkit-backdrop-filter: blur(10px) saturate(140%);
+        }
+        .secondary {
+          background: var(--glass-strong); color:var(--text);
+          border:1px solid var(--border);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.06), inset 0 1px 0 var(--outline);
+        }
+        .toolbar { display:flex; align-items:center; justify-content:space-between; margin-top:8px; }
+        .switch { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); }
+        input[type="checkbox"] { accent-color: var(--accent); }
+        #statusMessage { text-align:center; margin-top:8px; font-size:13px; min-height:18px; color:var(--muted); }
+        .error { color:#c92a2a; }
+        .success { color:#2b8a3e; }
+
+        @media (prefers-color-scheme: dark) {
+          :root { 
+            /* --- MODIFIED VALUES FOR CONTRAST --- */
+            --glass: rgba(20,20,22,0.5);         /* Was 0.4 */
+            --glass-strong: rgba(20,20,22,0.6);  /* Was 0.5 */
+            --border: rgba(255,255,255,0.3);     /* Was 0.24 */
+            /* ------------------------------------ */
+            --outline: rgba(0,0,0,0.2); 
+            --text:#f5f7fb; 
+            --muted:#c4c6cf; 
+          }
+          .primary { background: rgba(255,255,255,0.9); color:#0b0b0f; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+      <div class="header">
+        <img class="logo" src="images/icon48.png" alt="Electron" />
+        <h1>Electron</h1>
+      </div>
+      <label for="taskInput">Command</label>
+      <textarea id="taskInput"></textarea>
+      <div class="toolbar">
+        <div class="switch">
+          <input type="checkbox" id="previewToggle" />
+          <label for="previewToggle">Preview plan</label>
+        </div>
+        <div class="row">
+          <button id="planBtn" class="secondary">Plan</button>
+          <button id="executeBtn" class="primary">Run</button>
+        </div>
+      </div>
+      <div id="statusMessage"></div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
